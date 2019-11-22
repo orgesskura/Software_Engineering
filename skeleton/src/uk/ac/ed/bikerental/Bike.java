@@ -2,13 +2,13 @@ package uk.ac.ed.bikerental;
 import java.time.LocalDate;
 
 public class Bike {
-    private LocalDate purchaseDate;
+    private LocalDate manufactureDate;
     // constructor for bike...add more to it
-    public Bike(LocalDate PurchaseDate){
-       this.purchaseDate = PurchaseDate;
+    public Bike(LocalDate mDate){
+       this.manfacture = mDate;
     }
-    public LocalDate getPurchaseDate(){
-        return this.purchaseDate;
+    public LocalDate getManufactureDate(){
+        return this.manufactureDate;
     }
     
     public BikeType getType() {

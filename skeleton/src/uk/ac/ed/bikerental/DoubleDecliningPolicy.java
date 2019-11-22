@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class DoubleDecliningPolicy implements ValuationPolicy {
     public BigDecimal calculateValue(Bike bike, LocalDate date) {
-	DateRange dates = new DateRange(bike.getPurchaseDate(),date);	
+	DateRange dates = new DateRange(bike.getManufactureDate(),date);	
 	
 	int age = (int) dates.toYears();
 	BikeType type = bike.getType();
