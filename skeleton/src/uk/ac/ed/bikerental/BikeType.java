@@ -18,6 +18,10 @@ public class BikeType {
     public BigDecimal getDepreciationRate(){
         return this.depreciationRate;
     }
+    public String getType(){
+        return this.type;
+    }
+    
     public BigDecimal getReplacementValue() {
         // TODO: Implement Bike.getReplacementValue
         assert false;
