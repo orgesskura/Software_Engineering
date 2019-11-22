@@ -5,9 +5,8 @@ import java.time.LocalDate;
 
 public class LinearDepreciationPolicy implements ValuationPolicy {
     public BigDecimal calculateValue(Bike bike, LocalDate date) {
-	assert bike.purchaseDate.isBefore(date);
-
-	BigDecimal age =new BigDecimal((int) DateRange(bike.getPurchaseDate(), date).toYears());
+    DateRange dates = new DateRange(bike.getPurchaseDate(),date);
+	BigDecimal age =new BigDecimal(dates.toYears());
 	BikeType type = bike.getType();
 
 
