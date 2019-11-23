@@ -14,7 +14,7 @@ public class LinearDepreciationPolicy implements ValuationPolicy {
 
 	assert deprAmount.compareTo(BigDecimal.ONE) < 0; // if deposit amount would be <= 0 
 	
-	return BigDecimal.ONE.subtract(deprAmount).multiply(type.getValue());
+	return (BigDecimal.ONE.subtract(deprAmount)).multiply(type.getValue());
     }
 }
     
