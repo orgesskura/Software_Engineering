@@ -3,6 +3,7 @@ package uk.ac.ed.bikerental;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import java.math.BigDecimal;
+import java.math.*;
 
 import java.beans.Transient;
 import java.time.LocalDate;
@@ -21,9 +22,9 @@ class LinearDepreciationPolicyTest {
         BigDecimal b1 = new BigDecimal(0.1);
         this.type1 = new BikeType("road",a,a1);
         this.type2 = new BikeType("mountain",b,b1);
-        LocalDate date1 = LocalDate.of(2014,Month.MARCH,25);
-        LocalDate date2 = LocalDate.of(2010,Month.SEPTEMBER,15);
-        LocalDate date3 = LocalDate.now();
+         this.date1 = LocalDate.of(2014,Month.MARCH,25);
+        this.date2 = LocalDate.of(2010,Month.SEPTEMBER,15);
+        this.date3 = LocalDate.of(2019,Month.NOVEMBER,23);
         this.bike1 = new Bike(date1,type1);
         this.bike2 = new Bike(date2,type2);
     }
@@ -31,8 +32,23 @@ class LinearDepreciationPolicyTest {
     @Test
     void calculateValue1(){
         LinearDepreciationPolicy pol = new LinearDepreciationPolicy();
-        BigDecimal d = pol.calculateValue(bike1, date3);
-        double a =(double) d.doubleValue();
-        assertEquals(30.0,a);
+        // get a big decimal representing the deposit amount..i string trailing zeroes as they are not needed
+        BigDecimal d = pol.calculateValue(bike1, this.date3).stripTrailingZeros();
+        // create a math context object to use it for rounding bigdecimal to 1 digit..it is one digit as that is the precision of the test depreciation rate i am using
+        MathContext m = new MathContext(1); 
+        d = d.round(m);
+       // compare what i get with what i am supposed to get
+        assertEquals(new BigDecimal(60).stripTrailingZeros(),d);
     }
+    
+    // second test is the same thing but testing it with a differet bike object
+    @Test
+       void calculateValue2(){
+        LinearDepreciationPolicy pol1 = new LinearDepreciationPolicy();
+        BigDecimal d = pol1.calculateValue(bike2, date3).stripTrailingZeros();
+        MathContext m = new MathContext(1);
+        d = d.round(m);
+        assertEquals(new BigDecimal(9.0).stripTrailingZeros(),d);
+      }
+// }
 }
