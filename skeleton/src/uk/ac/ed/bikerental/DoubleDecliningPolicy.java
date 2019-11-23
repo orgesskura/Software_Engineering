@@ -11,7 +11,7 @@ public class DoubleDecliningPolicy implements ValuationPolicy {
 	BikeType type = bike.getType();
 
 	BigDecimal deprAmount =new BigDecimal(2).multiply(type.getDepreciationRate());
-	deprAmount = BigDecimal.ONE.subtract(deprAmount).pow(age);
+	deprAmount =(BigDecimal.ONE.subtract(deprAmount)).pow(age);
 
 	assert deprAmount.compareTo(BigDecimal.ONE) < 0; // if deposit amount would be <= 0
 

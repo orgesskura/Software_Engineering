@@ -12,7 +12,7 @@ public class LinearDepreciationPolicy implements ValuationPolicy {
 
 	BigDecimal deprAmount = age.multiply(type.getDepreciationRate()); //each bike type has certain deprecation rate
 
-	//assert deprAmount.compareTo(BigDecimal.ONE) < 0; // if deposit amount would be <= 0 
+	assert deprAmount.compareTo(BigDecimal.ONE) < 0; // if deposit amount would be <= 0 
 	
 	return (BigDecimal.ONE.subtract(deprAmount)).multiply(type.getValue());
     }
