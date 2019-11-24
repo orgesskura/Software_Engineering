@@ -2,26 +2,31 @@ package uk.ac.ed.bikerental;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Quote {
     private BikeProvider provider;
-    private BikeType type;
+    private List<Bike> bikes;
     private BigDecimal price;
     private BigDecimal deposit;
 
-    // this should have a list of bikes instead of a biketype
-    public Quote(BikeProvider prov, BikeType types, BigDecimal prices, BigDecimal deposits ){
+    public Quote(BikeProvider prov, ArrayList<Bike> bikes, BigDecimal prices, BigDecimal deposits ){
+	assert (prov != null && bikes != null && prices != null && deposits != null);
+	
         this.provider = prov;
-        this.type = types;
+	this.bikes = bikes;
         this.price = prices;
         this.deposit = deposits;
     }
     public BikeProvider getBikeProvider(){
         return this.provider;
     }
-    public BikeType getBikeType(){
-        return this.type;
+
+    public List<Bike> getBikes() {
+	return this.bikes;
     }
+    
     public BigDecimal getPrice(){
         return this.price;
     }
