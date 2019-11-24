@@ -2,11 +2,14 @@ package uk.ac.ed.bikerental;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+
 public class Quote {
     private BikeProvider provider;
     private BikeType type;
     private BigDecimal price;
     private BigDecimal deposit;
+
+    // this should have a list of bikes instead of a biketype
     public Quote(BikeProvider prov, BikeType types, BigDecimal prices, BigDecimal deposits ){
         this.provider = prov;
         this.type = types;

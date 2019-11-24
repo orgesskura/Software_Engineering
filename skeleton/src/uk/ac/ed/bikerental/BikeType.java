@@ -7,24 +7,26 @@ public class BikeType {
     private String type;
     private BigDecimal originalValue;
     private BigDecimal depreciationRate;
+    
     public BikeType(String types,BigDecimal value,BigDecimal dValue){
          this.originalValue = value;
          this.type = types;
          this.depreciationRate = dValue;
     }
-    public BigDecimal getValue(){
+    
+    public BigDecimal getValue() {
         return this.originalValue;
     }
-    public BigDecimal getDepreciationRate(){
+    
+    public BigDecimal getDepreciationRate() {
         return this.depreciationRate;
     }
-    public String getType(){
+    
+    public String getType() {
         return this.type;
     }
     
     public BigDecimal getReplacementValue() {
-        // TODO: Implement Bike.getReplacementValue
-        assert false;
-        return null;
+        return this.originalValue;
     }
 }
