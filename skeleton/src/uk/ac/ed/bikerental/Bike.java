@@ -4,6 +4,9 @@ import java.time.LocalDate;
 public class Bike {
     private LocalDate manufactureDate;
     private BikeType type;
+    private int id;
+    private BikeStatus status;
+    
     
     // constructor for bike...add more to it
     public Bike(LocalDate mDate,BikeType  types){

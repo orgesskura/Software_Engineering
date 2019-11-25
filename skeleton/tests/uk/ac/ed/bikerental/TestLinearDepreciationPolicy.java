@@ -8,7 +8,7 @@ import java.math.*;
 import java.beans.Transient;
 import java.time.LocalDate;
 import java.time.Month;
-class LinearDepreciationPolicyTest {
+class TestLinearDepreciationPolicy {
     private Bike bike1,bike2;
     private BikeType type1,type2;
     private LocalDate date1,date2,date3;
