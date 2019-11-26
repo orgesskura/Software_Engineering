@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Booking {
    private Quote quoteDetails;
    private BigDecimal orderNr;
-   private BookingStatus status;
+   public BookingStatus status;
    public Booking(Quote quote,BigDecimal order_nr,BookingStatus statuss){
        this.quoteDetails = quote;
        this.orderNr = order_nr;

@@ -8,7 +8,7 @@ public class BikeType {
     private BigDecimal originalValue;
     private BigDecimal depreciationRate;
     private BigDecimal daily_price;
-    private BigDecimal deposit_amount; // we implement this with the default deposit rate calculator
+    private BigDecimal deposit_amount; // we implement this with the default deposit rate calculator interaface
     public BikeType(String types,BigDecimal value,BigDecimal dValue,BigDecimal DailyPrice){
          this.originalValue = value;
          this.type = types;

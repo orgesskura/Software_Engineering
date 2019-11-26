@@ -20,8 +20,8 @@ class TestLinearDepreciationPolicy {
         BigDecimal a1 = new BigDecimal(0.1);
         BigDecimal b = new BigDecimal(90);
         BigDecimal b1 = new BigDecimal(0.1);
-        this.type1 = new BikeType("road",a,a1);
-        this.type2 = new BikeType("mountain",b,b1);
+        this.type1 = new BikeType("road",a,a1,new  BigDecimal(100));
+        this.type2 = new BikeType("mountain",b,b1,new BigDecimal(100));
          this.date1 = LocalDate.of(2014,Month.MARCH,25);
         this.date2 = LocalDate.of(2010,Month.SEPTEMBER,15);
         this.date3 = LocalDate.of(2019,Month.NOVEMBER,23);
