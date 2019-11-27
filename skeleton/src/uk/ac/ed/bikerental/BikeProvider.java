@@ -12,11 +12,14 @@ public class BikeProvider extends User {
 	private PricingPolicy pricingPolicy;
 	private ValuationPolicy valuationPolicy;
 	private BigDecimal depositRate;
-    
-	public BikeProvider(String name, Location location, List<String> openingHours, Set<BikeProvider> partners) {
+
+	public BikeProvider(String name, Location location, List<String> openingHours, Set<BikeProvider> partners, PricingPolicy pricingPolicy, ValuationPolicy valuationPolicy, BigDecimal depositRate) {
 		super(name, location);
 		this.openingHours = openingHours;
 		this.partners = partners;
+		this.pricingPolicy = pricingPolicy;
+		this.valuationPolicy = valuationPolicy;
+		this.depositRate = depositRate;
 	}
 
 	public List<String> getOpeningHours() {
@@ -38,5 +41,29 @@ public class BikeProvider extends User {
 			this.partners.add(partner);
 			partner.addPartner(this);
 		}
+	}
+
+	public void setPricingPolicy(PricingPolicy policy) {
+		this.pricingPolicy = policy;
+	}
+
+	public PricingPolicy getPricingPolicy() {
+		return this.pricingPolicy;
+	}
+
+	public void setValuationPolicy(ValuationPolicy policy) {
+		this.valuationPolicy = policy;
+	}
+
+	public ValuationPolicy getValuationPolicy() {
+		return this.valuationPolicy;
+	}
+
+	public void setDepositRate(BigDecimal newRate) {
+		this.depositRate = newRate;
+	}
+
+	public BigDecimal getDepositRate() {
+		return this.depositRate;
 	}
 }
