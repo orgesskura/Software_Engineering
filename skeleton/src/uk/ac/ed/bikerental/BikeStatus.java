@@ -1,8 +1,10 @@
 package uk.ac.ed.bikerental;
 
 enum BikeStatus {
-    Booked,
-    Available,
-    //add other shit in here
-
+    AVAILABLE,
+    FOR_DELIVERY,
+    DELIVERING,
+    UNAVAILABLE,
+    FOR_RETURN,
+    RETURNING
 }

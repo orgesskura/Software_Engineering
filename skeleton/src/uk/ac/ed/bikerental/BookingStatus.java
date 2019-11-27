@@ -1,13 +1,12 @@
 package uk.ac.ed.bikerental;
 
-
-
-
 enum  BookingStatus{
    AwaitingPayment,
-   PAY_DEPOSIT,
-   PAYMENT_DONE,
-   DEADLINE_REACHED
+   PAY_DEPOSIT, // paid deposit
+   PAYMENT_DONE, // paid rental price
+   DEADLINE_REACHED, // should return the bike
    // add more types in here
-   
+
+   BOOKED,
+   RETURNED
 }

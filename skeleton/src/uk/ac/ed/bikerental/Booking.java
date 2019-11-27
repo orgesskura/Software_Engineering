@@ -9,10 +9,10 @@ public class Booking {
     private int orderNumber;
     private BookingStatus status;
     
-    public Booking(Quote quote, int orderNumber) {
+    public Booking(Quote quote, int orderNumber, BookingStatus status) {
 	this.quote = quote;
 	this.orderNumber = orderNumber;
-	this.status = BookingStatus.PENDING;
+	this.status = status;
     }
 
     public int getOrderNumber() {
@@ -30,10 +30,4 @@ public class Booking {
     public void setStatus(BookingStatus status) {
 	this.status = status;
     }
-}
-
-enum BookingStatus {
-    PENDING,
-    BOOKED,
-    RETURNED
 }

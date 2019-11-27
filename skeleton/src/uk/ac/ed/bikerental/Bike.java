@@ -6,16 +6,16 @@ import java.time.LocalDate;
 public class Bike implements Deliverable {
     private LocalDate manufactureDate;
     private BikeType type;
-    private int id;
+    private BigDecimal id;
     private BikeStatus status;
     
     
     // constructor for bike...add more to it
-    public Bike(LocalDate mDate, BikeType type, int id) {
+    public Bike(LocalDate mDate, BikeType type, BigDecimal id) {
        this.manufactureDate = mDate;
        this.type = type;
        this.status = BikeStatus.AVAILABLE;
-        this.id = id;
+       this.id = id;
     }
     
     public LocalDate getManufactureDate(){
@@ -52,13 +52,4 @@ public class Bike implements Deliverable {
 	    this.status = BikeStatus.AVAILABLE;
 	}
     }
-}
-
-enum BikeStatus {
-    AVAILABLE,
-    FOR_DELIVERY,
-    DELIVERING,
-    UNAVAILABLE,
-    FOR_RETURN,
-    RETURNING
 }

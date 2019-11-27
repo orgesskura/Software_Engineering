@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import java.time.LocalDate;
+
 public class Quote {
     private BikeProvider provider;
     private List<Bike> bikes;
@@ -20,7 +21,7 @@ public class Quote {
         this.bikes = bikes;
         this.price = prices;
         this.deposit = deposits;
-        this.date = Date;
+        this.date = date;
     }
     public LocalDate getDate(){
         return this.date;
