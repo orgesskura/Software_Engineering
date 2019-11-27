@@ -7,18 +7,28 @@ import java.util.*;
 public class Booking {
     private Quote quote;
     private int orderNumber;
+    private BookingStatus status;
     
     public Booking(Quote quote, int orderNumber) {
 	this.quote = quote;
 	this.orderNumber = orderNumber;
-    }
-
-    public List<Bike> getBikes() {
-	return this.quote.getBikes();
+	this.status = BookingStatus.PENDING;
     }
 
     public int getOrderNumber() {
 	return this.orderNumber;
+    }
+
+    public Quote getQuote() {
+	return this.quote;
+    }
+    
+    public BookingStatus getStatus() {
+	return this.status;
+    }
+	 
+    public void setStatus(BookingStatus status) {
+	this.status = status;
     }
 }
 

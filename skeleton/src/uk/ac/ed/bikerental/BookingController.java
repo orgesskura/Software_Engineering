@@ -2,6 +2,7 @@ package uk.ac.ed.bikerental;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.time.LocalDate;
 import java.util.*;
 
 class BookingNotFoundException extends Exception {
@@ -19,7 +20,7 @@ public class BookingController {
 	}
     }
 
-    public void returnBikes(ArrayList<Bike> bikes, BikeController controller) {
+    public void returnBikes(ArrayList<Bike> bikes, BikeProvider provider) {
 	Booking booking;
 	try {
 	    booking = findBooking(bikes);
@@ -29,10 +30,32 @@ public class BookingController {
 	    return;
 	}
 
+	if (booking.getStatus() != BookingStatus.BOOKED) {
+	    System.out.println("bikes are not currently being booked");
+	    return;
+	}
+	
 	returnDeposit(booking);
 
-	for (Bike bike : booking.getBikes()) {
-	    controller.makeAvailable(bike);
+	Quote q = booking.getQuote();
+	
+	if (q.getBikeProvider() == provider) {
+	    for (Bike bike : q.getBikes()) {
+		bike.setStatus(BikeStatus.AVAILABLE);
+	    }
+
+	    booking.setStatus(BookingStatus.RETURNED);
+	} else {
+	    assert q.getBikeProvider().hasPartner(provider);
+
+	    for (Bike bike : q.getBikes()) {
+		DeliveryServiceFactory.setupMockDeliveryService();
+		DeliveryService deliveryService = DeliveryServiceFactory.getDeliveryService();
+
+		bike.setStatus(BikeStatus.FOR_RETURN);
+		
+		deliveryService.scheduleDelivery(bike, provider.getLocation(), q.getBikeProvider().getLocation(), LocalDate.now().plusDays(1));
+	    }
 	}
     }
 
@@ -40,7 +63,7 @@ public class BookingController {
 	Objects.requireNonNull(bikes);
 	
 	for (Booking booking : bookings) {
-	    if (booking.getBikes().equals(bikes)) {
+	    if (booking.getQuote().getBikes().equals(bikes)) {
 		return booking;
 	    }
 	}
@@ -54,6 +77,8 @@ public class BookingController {
     }
 
     public void returnDeposit(Booking booking) {
+	Quote q = booking.getQuote();
+	
 	PaymentService.pay();
     }
 }

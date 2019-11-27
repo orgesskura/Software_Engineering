@@ -3,7 +3,7 @@ package uk.ac.ed.bikerental;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Bike {
+public class Bike implements Deliverable {
     private LocalDate manufactureDate;
     private BikeType type;
     private BikeStatus status;
@@ -30,11 +30,32 @@ public class Bike {
     public BikeStatus getStatus() {
 	return this.status;
     }
+
+    public void onPickup() {
+	assert this.status == BikeStatus.FOR_DELIVERY || this.status == BikeStatus.FOR_RETURN;
+	
+	if (this.status == BikeStatus.FOR_DELIVERY) {
+	    this.status = BikeStatus.DELIVERING;
+	} else if (this.status == BikeStatus.FOR_RETURN) {
+	    this.status = BikeStatus.RETURNING;
+	}
+    }
+
+    public void onDropoff() {
+	assert this.status == BikeStatus.DELIVERING || this.status == BikeStatus.RETURNING;
+	if (this.status == BikeStatus.DELIVERING) {
+	    this.status = BikeStatus.UNAVAILABLE;
+	} else if (this.status == BikeStatus.RETURNING) {
+	    this.status = BikeStatus.AVAILABLE;
+	}
+    }
 }
 
 enum BikeStatus {
     AVAILABLE,
+    FOR_DELIVERY,
     DELIVERING,
     UNAVAILABLE,
+    FOR_RETURN,
     RETURNING
 }

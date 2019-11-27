@@ -24,6 +24,10 @@ public class BikeProvider extends User {
 	return this.partners;
     }
 
+    public boolean hasPartner(BikeProvider partner) {
+	return this.partners.contains(partner);
+    }
+
     public void addPartner(BikeProvider partner) {
 	assert partner != null;
 
