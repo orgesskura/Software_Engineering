@@ -4,31 +4,31 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.*;
 
-public class BikeProvider extends User{
+public class BikeProvider extends User {
   private String name;
   private Location location;
-  private Set<BikeProvider> partnersWith;
+  private Set<BikeProvider> partners;
   private List<String> openingHours;
 
   public BikeProvider(String name, Location location, List<String> openingHours, Set<BikeProvider> partners) {
        super(name, location);
        this.openingHours = openingHours;
-       this.partnersWith = partners;
+       this.partners = partners;
   }
 
     public List<String> getOpeningHours() {
 	return this.openingHours;
     }
 
-    public List<BikeProvider> getPartners() {
-	return this.partnersWith;
+    public Set<BikeProvider> getPartners() {
+	return this.partners;
     }
 
     public void addPartner(BikeProvider partner) {
 	assert partner != null;
 
-	if (!this.contains(partner)) {
-	    this.partnersWith.add(partner);
+	if (!this.partners.contains(partner)) {
+	    this.partners.add(partner);
 	    partner.addPartner(this);
 	}
     }

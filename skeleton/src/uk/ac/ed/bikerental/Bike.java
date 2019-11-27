@@ -26,6 +26,10 @@ public class Bike {
     public void setStatus(BikeStatus status) {
 	this.status = status;
     }
+
+    public BikeStatus getStatus() {
+	return this.status;
+    }
 }
 
 enum BikeStatus {
