@@ -9,11 +9,11 @@ public class BikeType {
     private BigDecimal depreciationRate;
     private BigDecimal rentalRate;
     
-    public BikeType(String types,BigDecimal value, BigDecimal dValue, BigDecimal rentalRate){
+    public BikeType(String types,BigDecimal value,BigDecimal dValue,BigDecimal rentalRate){
          this.originalValue = value;
          this.type = types;
          this.depreciationRate = dValue;
-	 this.rentalRate = rentalRate;
+        this.rentalRate = rentalRate;
     }
 
     //this is redundant
