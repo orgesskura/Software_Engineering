@@ -43,15 +43,18 @@ public class BikeController {
 		return available;
 	}
 
-	public List<Bike> getMatchingAvailableBikes(BikeProvider provider, HashMap<BikeType, Integer> required) {
+	public List<Bike> getMatchingAvailableBikes(BikeProvider provider, HashMap<BikeType, Integer> required, BookingController bookingController, DateRange range) {
 		ArrayList<Bike> matches = new ArrayList<Bike>();
 		Integer needed;
 
 		for (Bike bike : this.bikes.keySet()) {
 			if (providerFor(bike) == provider) {
+				if (!bookingController.bikeAvailableDuringRange(bike, range)) {
+					continue;
+				}
 				needed = required.get(bike.getType());
 
-				if (needed != null && needed > 0) {
+				if (needed != null) {
 					matches.add(bike);
 					required.put(bike.getType(), needed-1);
 				}
