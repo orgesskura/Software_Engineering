@@ -9,6 +9,7 @@ public class BikeProvider extends User {
 	private Location location;
 	private Set<BikeProvider> partners;
 	private List<String> openingHours;
+	private HashMap<BikeType,Integer> bikesNr;//current available nr of bikeTypes
 	private PricingPolicy pricingPolicy;
 	private ValuationPolicy valuationPolicy;
 	private BigDecimal depositRate;
