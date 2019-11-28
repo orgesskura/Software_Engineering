@@ -43,7 +43,7 @@ public class BookingController {
 			return;
 		}
 
-		if (booking.getStatus() != BookingStatus.BOOKED) {
+		if (booking.getStatus() != BookingStatus.PAYMENT_DONE) {
 			System.out.println("bikes are not currently being booked");
 			return;
 		}
