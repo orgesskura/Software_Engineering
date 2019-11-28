@@ -33,7 +33,7 @@ public class BookingController {
 	 * @param bikes    a list of the bikes being returned
 	 * @param provider the provider that the customer is returning the bikes to
 	 */
-	public void returnBikes(ArrayList<Bike> bikes, BikeProvider provider) {
+	public void returnBikes(ArrayList<Bike> bikes, BikeProvider provider,BankDetails customer_deposit) {
 		Booking booking;
 		try {
 			booking = findBooking(bikes);
@@ -48,7 +48,7 @@ public class BookingController {
 			return;
 		}
 
-		returnDeposit(booking);
+		returnDeposit(booking,customer_deposit);
 
 		Quote q = booking.getQuote();
 
@@ -105,9 +105,9 @@ public class BookingController {
 	 *
 	 * @param booking the booking to return the deposit
 	 */
-	public void returnDeposit(Booking booking) {
+	public void returnDeposit(Booking booking,BankDetails details) {
 		Quote q = booking.getQuote();
 
-		PaymentService.pay();
+		Payment.doPayment(booking,details);
 	}
 }
