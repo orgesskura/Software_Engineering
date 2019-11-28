@@ -9,7 +9,14 @@ class BookingNotFoundException extends Exception {
 	BookingNotFoundException() { }
 }
 
+/**
+ * A manager class to collect all bookings made within the system. Provides functionality for
+ * interacting with bookings.
+ */
 public class BookingController {
+	/**
+	 * The bookings the controller manages
+	 */
 	private List<Booking> bookings;
 
 	/**
@@ -76,13 +83,17 @@ public class BookingController {
 	 * Finds the booking containing a given list of bikes
 	 *
 	 * @param  bikes the bikes the desired booking will be about
+	 *
 	 * @return       the booking containing the bikes
+	 * @throws BookingNotFoundException If the given <code>bikes</code> do not belong to any
+	 * <code>Booking</code> managed by the controller
+	 * @throws NullPointerException If the given <code>bikes</code> are null
 	 */
 	private Booking findBooking(ArrayList<Bike> bikes) throws BookingNotFoundException {
 		Objects.requireNonNull(bikes);
 
 		for (Booking booking : bookings) {
-			if (booking.getQuote().getBikes().equals(bikes)) {
+			if (booking.getQuote().getBikes().equals(bikes) && booking.getStatus() == BookingStatus.PAYMENT_DONE) {
 				return booking;
 			}
 		}
@@ -91,9 +102,31 @@ public class BookingController {
 	}
 
 	/**
+	 * Determines is a given list of bikes are available for booking during a given range
+	 *
+	 * @param bike the bike to be checked
+	 * @param range the dates to check for the availability of the bike
+	 *
+	 * @return <code>true</code> if the bike has not been booked during the entire range
+	 */
+	public boolean bikeAvailableDuringRange(Bike bike, DateRange range) {
+		Quote quote;
+
+		for (Booking booking : this.bookings) {
+			quote = booking.getQuote();
+			if (quote.getBikes().contains(bike) && range.overlaps(quote.getDate()) && quote.getStatus == BookingStatus.PAYMENT_DONE)
+				return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Adds a booking to the controller
 	 *
 	 * @param invoice the booking to add
+	 *
+	 * @throws NullPointerException if given a <code>null</code> reference to add
 	 */
 	public void addInvoice(Booking invoice) {
 		Objects.requireNonNull(invoice);
