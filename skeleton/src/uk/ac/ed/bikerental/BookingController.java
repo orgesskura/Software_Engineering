@@ -87,13 +87,14 @@ public class BookingController {
 	 * @return       the booking containing the bikes
 	 * @throws BookingNotFoundException If the given <code>bikes</code> do not belong to any
 	 * <code>Booking</code> managed by the controller
-	 * @throws NullPointerException If the given <code>bikes</code> are null
+	 * @throws NullPointerException if the given <code>bikes</code> or <code>dates</code> are null
 	 */
 	private Booking findBooking(ArrayList<Bike> bikes) throws BookingNotFoundException {
 		Objects.requireNonNull(bikes);
+		Objects.requireNonNull(dates);
 
 		for (Booking booking : bookings) {
-			if (booking.getQuote().getBikes().equals(bikes) && booking.getStatus() == BookingStatus.PAYMENT_DONE) {
+			if (booking.getQuote().getBikes().equals(bikes) && booking.getQuote.getDates().equals(dates)) {
 				return booking;
 			}
 		}
