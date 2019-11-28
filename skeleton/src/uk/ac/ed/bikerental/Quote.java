@@ -12,19 +12,19 @@ public class Quote {
 	private List<Bike> bikes;
 	private BigDecimal price;
 	private BigDecimal deposit;
-	private LocalDate date;
+	private DateRange dates;
 
-	public Quote(BikeProvider prov, ArrayList<Bike> bikes, BigDecimal prices, BigDecimal deposits, LocalDate date){
+	public Quote(BikeProvider prov, ArrayList<Bike> bikes, BigDecimal prices, BigDecimal deposits, DateRange date){
 		assert (prov != null && bikes != null && prices != null && deposits != null);
 
 		this.provider = prov;
 		this.bikes = bikes;
 		this.price = prices;
 		this.deposit = deposits;
-		this.date = date;
+		this.dates = date;
 	}
-	public LocalDate getDate(){
-		return this.date;
+	public DateRange getDates(){
+		return this.dates;
 	}
 	public BikeProvider getBikeProvider(){
 		return this.provider;

@@ -31,9 +31,33 @@ public class DateRange {
 
 	public Boolean overlaps(DateRange other) {
 		// TODO: implement date range intersection checking
-		assert false;
-		return null;
+
+		LocalDate start1 = other.getStart();
+		LocalDate end1   = other.getEnd();
+		if(start.compareTo(start1)>=0){
+			if(start.compareTo(end1)>=0) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			if(end.compareTo(start1)<0){
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		
 	}
+	// checks if this daterange lies completely on the "other" daterange
+  public Boolean overlapsCompletely(DateRange other){
+	LocalDate start1 = other.getStart();
+	LocalDate end1   = other.getEnd();
+	return start.compareTo(start1)>=0 && end.compareTo(end1)>=0;
+  }	
 
 
 	@Override
