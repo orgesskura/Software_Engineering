@@ -43,6 +43,29 @@ public class BikeController {
 		return available;
 	}
 
+	public List<Bike> getMatchingAvailableBikes(BikeProvider provider, HashMap<BikeType, Integer> required) {
+		ArrayList<Bike> matches = new ArrayList<Bike>();
+		Integer needed;
+
+		for (Bike bike : this.bikes.keySet()) {
+			if (providerFor(bike) == provider) {
+				needed = required.get(bike.getType());
+
+				if (needed != null && needed > 0) {
+					matches.add(bike);
+					required.put(bike.getType(), needed-1);
+				}
+			}
+		}
+
+		for (BikeType type : required.keySet()) {
+			if (required.get(type) > 0) return null;
+		}
+
+		return matches;
+	}
+
+
 	public BikeProvider providerFor(Bike bike) {
 		assert bike != null;
 
