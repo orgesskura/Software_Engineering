@@ -94,7 +94,7 @@ public class BookingController {
 		Objects.requireNonNull(dates);
 
 		for (Booking booking : bookings) {
-			if (booking.getQuote().getBikes().equals(bikes) && booking.getQuote.getDates().equals(dates)) {
+			if (booking.getQuote().getBikes().equals(bikes) && booking.getStatus() == BookingStatus.PAYMENT_DONE) {
 				return booking;
 			}
 		}

@@ -38,7 +38,7 @@ public class Location {
 	 * @throws NullPointerException if the other <code>Location</code> is <code>null</code>
 	 */
 	public boolean isNearTo(Location other) {
-		Objects.requuireNonNull(other);
+		Objects.requireNonNull(other);
 
 		return this.postcode.equals(other.getPostcode());
 	}
