@@ -14,7 +14,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Set;
 import java.util.HashSet;
-
+import java.time.LocalTime;
+import java.util.List;
 public class SystemTests {
     // You can add attributes here
 
@@ -72,17 +73,29 @@ public class SystemTests {
         l1 = new Location("AA1 B23", "12 road street");
         l2 = new Location("AA1 B23", "21 street road");
 
-        open1 = new ArrayList<String>();
-        open1.add("10 - 12");
-        open1.add("10 - 18");
-        open1.add("10 - 12");
-        open1.add("10 - 12");
-        open1.add("");
-        open1.add("");
-        open1.add("10 - 12");
+       Map<DaysOfWeek,ArrayList<LocalTime>> openingHours= new HashMap<>();
+       ArrayList<LocalTime> list = new ArrayList<>();
+       list.add(LocalTime.of(10,0,0));
+       list.add(LocalTime.of(16,0,0));
+       
+        openingHours.put(
+            DaysOfWeek.MONDAY, 
+            list);
+        openingHours.put(
+            DaysOfWeek.TUESDAY,
+            list);
+        openingHours.put(
+            DaysOfWeek.WEDNESDAY,
+            list);
+        openingHours.put(
+            DaysOfWeek.THURSDAY,
+            list);
+        openingHours.put(
+            DaysOfWeek.FRIDAY,
+            list);
         
-        p1 = new BikeProvider("shop1", l1, open1, null, null, new LinearDepreciationPolicy(), new BigDecimal(1.2));
-        p2 = new BikeProvider("shop2", l2, open1, null, null, new DoubleDecliningPolicy(), new BigDecimal(1.1));
+        p1 = new BikeProvider("shop1", l1, openingHours, null,null, new LinearDepreciationPolicy(), new BigDecimal(1.2));
+        p2 = new BikeProvider("shop2", l2, openingHours, null, null, new DoubleDecliningPolicy(), new BigDecimal(1.1));
 
         bikes = new HashMap<Bike, BikeProvider>();
         bikes.put(b1, p1);
