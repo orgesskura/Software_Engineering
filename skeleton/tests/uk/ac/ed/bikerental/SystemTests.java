@@ -55,6 +55,8 @@ public class SystemTests {
     private BankDetails details2;
     private BookingController bookingController;
     private Map<DaysOfWeek,ArrayList<LocalTime>> openingHours;
+    private DateRange dates;
+    private Set<BikeType> types;
     
     @BeforeEach
     void setUp() throws Exception {
@@ -66,7 +68,7 @@ public class SystemTests {
         road = new BikeType("road", new BigDecimal(250), new BigDecimal(0.2), new BigDecimal(0.2));
         bmx = new BikeType("bmx", new BigDecimal(400), new BigDecimal(0.05), new BigDecimal(0.4));
 
-        Set<BikeType> types = new HashSet<>();
+        types = new HashSet<>();
         types.add(mountain);
         types.add(road);
         types.add(bmx);
@@ -138,6 +140,7 @@ public class SystemTests {
         String name2 = "Orgasm Skura";
         LocalDate date1 = LocalDate.of(2021,Month.MARCH,25);
         LocalDate date2  = LocalDate.of(2022,Month.SEPTEMBER,10);
+        dates = new DateRange(date1,date2);
         int code1 = 969;
         int code2 = 177;
         this.details1 = new BankDetails(nr1,name1,date1,code1);
@@ -174,7 +177,7 @@ public class SystemTests {
         HashMap<BikeType,Integer> bikesPerType = new HashMap<>();
         bikesPerType.put(bmx,3);
         Location location = new Location("EH12 7AP","13 Traquair Park East");
-        ArrayList<Quote> quote = qController.listQuotes(dates,location,bikesPerType);
+        ArrayList<Quote> quote = this.qController.listQuotes(dates,location,bikesPerType);
         assertEquals(quote.size(),0);
         
     }
@@ -207,6 +210,19 @@ public class SystemTests {
         qController.bookQuote(quote.get(0),"Sami",true,this.details1,customer1);
         assertEquals(bookingController.getBookings().get(0).getStatus(),BookingStatus.PAYMENT_DONE);
     }
+
+
+    @Test
+    void bookQuote(){
+        Customer customer1 = new Customer("Sami",l1,7978988,new ArrayList<Booking>());
+        Quote qoute = new Quote(p1,this.types,new BigDecimal(10.0),new BigDecimal(5.0),dates,bookedBikes);
+        qController.bookQuote(qoute,"Orges",true,this.details1,customer1);
+        assertEquals(bookingController.getBookings().get(0).getStatus(),BookingStatus.PAYMENT_DONE);
+    }
+
+
+
+
 
 
     
