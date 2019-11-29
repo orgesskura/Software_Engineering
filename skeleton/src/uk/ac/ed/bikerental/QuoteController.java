@@ -85,7 +85,7 @@ public class QuoteController{
         Booking booking = new Booking(quotes,this.orderNr,BookingStatus.AwaitingPayment);
         this.bookings.add(booking);
         Payment.doPayment(booking,details);
-
+        this.boController.addInvoice(booking);
         booking.setStatus(BookingStatus.PAYMENT_DONE);
 
         if (delivery_required) {

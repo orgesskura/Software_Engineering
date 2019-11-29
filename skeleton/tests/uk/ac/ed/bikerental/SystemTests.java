@@ -106,6 +106,7 @@ public class SystemTests {
         
         p1 = new BikeProvider("shop1", l1, openingHours, new HashSet<BikeProvider>(),new DefaultPricingPolicy(), new LinearDepreciationPolicy(), new BigDecimal(1.2));
         p2 = new BikeProvider("shop2", l2, openingHours, new HashSet<BikeProvider>(), mock, new DoubleDecliningPolicy(), new BigDecimal(1.1));
+        providers = new ArrayList<BikeProvider>();
         providers.add(p1);
         providers.add(p2);
         bikes = new HashMap<Bike, BikeProvider>();
@@ -160,10 +161,22 @@ public class SystemTests {
         DateRange dates = new DateRange(LocalDate.of(2019,Month.MARCH,21),LocalDate.of(2019,Month.NOVEMBER,30));
         Customer customer1 = new Customer("Sami",l1,7978988,new ArrayList<Booking>());
         HashMap<BikeType,Integer> bikesPerType = new HashMap<>();
+        bikesPerType.put(road,1);
+        Location location = new Location("AA12 7AP","13 Traquair Park East");
+        ArrayList<Quote> quote = qController.listQuotes(dates,location,bikesPerType);
+        assertEquals(quote.size(),1);
+    }
+
+    @Test
+    void findQuoteTestDifferentCity(){
+        DateRange dates = new DateRange(LocalDate.of(2019,Month.MARCH,21),LocalDate.of(2019,Month.NOVEMBER,30));
+        Customer customer1 = new Customer("Sami",l1,7978988,new ArrayList<Booking>());
+        HashMap<BikeType,Integer> bikesPerType = new HashMap<>();
         bikesPerType.put(bmx,3);
         Location location = new Location("EH12 7AP","13 Traquair Park East");
         ArrayList<Quote> quote = qController.listQuotes(dates,location,bikesPerType);
-        assertEquals(quote.size(),3);
+        assertEquals(quote.size(),0);
+        
     }
 
     @Test
@@ -181,6 +194,22 @@ public class SystemTests {
         bookingController.returnBikes(bookedBikes, p2,details2);
         assertEquals(b1.getStatus(), BikeStatus.FOR_RETURN);
     }
+
+    @Test
+    void findQuoteAndBookIt(){
+        DateRange dates = new DateRange(LocalDate.of(2019,Month.MARCH,21),LocalDate.of(2019,Month.NOVEMBER,30));
+        Customer customer1 = new Customer("Sami",l1,7978988,new ArrayList<Booking>());
+        HashMap<BikeType,Integer> bikesPerType = new HashMap<>();
+        bikesPerType.put(bmx,3);
+        Location location = new Location("EH12 7AP","13 Traquair Park East");
+        ArrayList<Quote> quote = qController.listQuotes(dates,location,bikesPerType);
+        assertEquals(quote.size(),1);
+        qController.bookQuote(quote.get(0),"Sami",true,this.details1,customer1);
+        assertEquals(bookingController.getBookings().get(0).getStatus(),BookingStatus.PAYMENT_DONE);
+    }
+
+
+    
 
    
 }
