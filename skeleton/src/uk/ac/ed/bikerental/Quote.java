@@ -16,7 +16,7 @@ public class Quote {
     private BigDecimal deposit;
     private DateRange dates;
     private List<Bike> bikes;
-    public Quote(BikeProvider prov, Set<BikeType> bikes, BigDecimal prices, BigDecimal deposits, DateRange date,List<Bike> bike){
+    public Quote(BikeProvider prov, Set<BikeType> bikes, BigDecimal prices, BigDecimal deposits, DateRange date,ArrayList<Bike> bike){
         assert (prov != null && bikes != null && prices != null && deposits != null);
 
         this.provider = prov;

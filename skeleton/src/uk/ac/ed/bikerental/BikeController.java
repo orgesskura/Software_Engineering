@@ -43,7 +43,7 @@ public class BikeController {
         return available;
     }
 
-    public List<Bike> getMatchingAvailableBikes(BikeProvider provider, HashMap<BikeType, Integer> required, BookingController bookingController, DateRange range) {
+    public ArrayList<Bike> getMatchingAvailableBikes(BikeProvider provider, HashMap<BikeType, Integer> required, BookingController bookingController, DateRange range) {
         ArrayList<Bike> matches = new ArrayList<Bike>();
         Integer needed;
 
@@ -62,7 +62,7 @@ public class BikeController {
         }
 
         for (BikeType type : required.keySet()) {
-            if (required.get(type) > 0) return null;
+            if (required.get(type) > 0) return new ArrayList<Bike>();
         }
 
         return matches;

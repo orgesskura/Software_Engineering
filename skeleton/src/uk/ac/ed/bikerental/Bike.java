@@ -17,6 +17,9 @@ public class Bike implements Deliverable {
         this.status = BikeStatus.AVAILABLE;
         this.id = id;
     }
+    public int getId(){
+        return this.id;
+    }
 
     public LocalDate getManufactureDate(){
         return this.manufactureDate;

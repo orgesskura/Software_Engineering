@@ -36,7 +36,7 @@ public class QuoteController{
         for(BikeProvider b : this.providers){
             boolean c = true;
             for(BikeType type : map.keySet()){
-                if(this.biController.getMatchingAvailableBikes(b,map,this.boController,a).equals(null)) c = false;
+                if(this.biController.getMatchingAvailableBikes(b,map,this.boController,a).size()==0) c = false;
 
             }
             if(c == true && location.isNearTo(b.getLocation())) {
@@ -125,8 +125,14 @@ public class QuoteController{
         booking.setStatus(BookingStatus.PAYMENT_DONE);
         // delivery service should check opening hours to decide when to pickup
         if (delivery_required) {
+            DeliveryServiceFactory.setupMockDeliveryService();
             DeliveryService delivery_service  = DeliveryServiceFactory.getDeliveryService();
             for (Bike bike : quotes.getBikes()) {
+               // assert(!customer.getLocation().equals(null));
+                assert(!quotes.equals(null));
+                assert(!quotes.getBikeProvider().getLocation().getPostcode().equals(null));
+
+                System.out.println(quotes.getBikeProvider().getLocation().getPostcode() +  quotes.getDates().getStart() );
                 delivery_service.scheduleDelivery(bike, quotes.getBikeProvider().getLocation(), customer.getLocation(), quotes.getDates().getStart());
             }
         }
