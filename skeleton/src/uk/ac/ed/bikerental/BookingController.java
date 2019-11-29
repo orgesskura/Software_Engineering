@@ -40,10 +40,10 @@ public class BookingController {
      * @param bikes    a list of the bikes being returned
      * @param provider the provider that the customer is returning the bikes to
      */
-    public void returnBikes(ArrayList<Bike> bikes, BikeProvider provider,BankDetails customer_deposit,DateRange dates) {
+    public void returnBikes(ArrayList<Bike> bikes, BikeProvider provider,BankDetails customer_deposit) {
         Booking booking;
         try {
-            booking = findBooking(bikes,dates);
+            booking = findBooking(bikes);
         } catch(BookingNotFoundException ex) {
             // TODO: add some error handling here
             System.out.println("collection of bikes is not being rented");
@@ -89,12 +89,12 @@ public class BookingController {
      * <code>Booking</code> managed by the controller
      * @throws NullPointerException if the given <code>bikes</code> or <code>dates</code> are null
      */
-    private Booking findBooking(ArrayList<Bike> bikes,DateRange dates) throws BookingNotFoundException {
+    private Booking findBooking(ArrayList<Bike> bikes) throws BookingNotFoundException {
         Objects.requireNonNull(bikes);
-        Objects.requireNonNull(dates);
+        
 
         for (Booking booking : bookings) {
-            if (booking.getQuote().getBikes().equals(bikes) && booking.getStatus() == BookingStatus.PAYMENT_DONE && booking.getQuote().getDates().equals(dates)) {
+            if (booking.getQuote().getBikes().equals(bikes) && booking.getStatus() == BookingStatus.PAYMENT_DONE ) {
                 return booking;
             }
         }

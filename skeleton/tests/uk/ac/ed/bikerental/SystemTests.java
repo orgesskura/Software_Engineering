@@ -15,12 +15,14 @@ import java.util.TreeSet;
 import java.util.Set;
 import java.util.HashSet;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.List;
 public class SystemTests {
     // You can add attributes here
 
     private BikeType mountain;
     private BikeType road;
+    private BikeType bmx;
 
     private LocalDate older;
     private LocalDate newer;
@@ -47,8 +49,10 @@ public class SystemTests {
     private Quote q1;
     private Booking bo1;
     private ArrayList<Booking> bs;
-
+    private BankDetails details1;
+    private BankDetails details2;
     private BookingController bookingController;
+    private Map<DaysOfWeek,ArrayList<LocalTime>> openingHours;
     
     @BeforeEach
     void setUp() throws Exception {
@@ -58,9 +62,12 @@ public class SystemTests {
         // Put your test setup here
         mountain = new BikeType("mountain", new BigDecimal(100), new BigDecimal(0.1), new BigDecimal(0.3));
         road = new BikeType("road", new BigDecimal(250), new BigDecimal(0.2), new BigDecimal(0.2));
+        bmx = new BikeType("bmx", new BigDecimal(400), new BigDecimal(0.05), new BigDecimal(0.4));
+
         Set<BikeType> types = new HashSet<>();
         types.add(mountain);
         types.add(road);
+        types.add(bmx);
         older = LocalDate.of(2018, 10, 10);
         newer = LocalDate.of(2019, 8, 19);
         newest = LocalDate.of(2019, 9, 21);
@@ -73,7 +80,7 @@ public class SystemTests {
         l1 = new Location("AA1 B23", "12 road street");
         l2 = new Location("AA1 B23", "21 street road");
 
-       Map<DaysOfWeek,ArrayList<LocalTime>> openingHours= new HashMap<>();
+       this.openingHours= new HashMap<>();
        ArrayList<LocalTime> list = new ArrayList<>();
        list.add(LocalTime.of(10,0,0));
        list.add(LocalTime.of(16,0,0));
@@ -118,7 +125,18 @@ public class SystemTests {
         this.bs = new ArrayList<Booking>();
         this.bs.add(bo1);
         
-        bookingController = new BookingController(bookings);
+        bookingController = new BookingController(bs);
+        String nr1  = "4312-1234-9876-0779";
+        String nr2  = "5347-9762-6969-0900";
+        String name1 = "Sami El-Daher";
+        String name2 = "Orgasm Skura";
+        LocalDate date1 = LocalDate.of(2021,Month.MARCH,25);
+        LocalDate date2  = LocalDate.of(2022,Month.SEPTEMBER,10);
+        int code1 = 969;
+        int code2 = 177;
+        this.details1 = new BankDetails(nr1,name1,date1,code1);
+        this.details2 = new BankDetails(nr2, name2, date2, code2);
+
     }
     
     // TODO: Write system tests covering the three main use cases
@@ -132,7 +150,7 @@ public class SystemTests {
     // black box test for bike return to original provider
     @Test
     void returnBikesToOriginalProviderPass() {
-        bookingController.returnBikes(bookedBikes, p1);
+        bookingController.returnBikes(bookedBikes, p1,details1);
 
         assertEquals(b1.getStatus(), BikeStatus.AVAILABLE);
     }
@@ -142,15 +160,9 @@ public class SystemTests {
     void returnBikesToPartnerProviderPass() {
         p1.addPartner(p2);
 
-        bookingController.returnBikes(bookedBikes, p2);
+        bookingController.returnBikes(bookedBikes, p2,details2);
         assertEquals(b1.getStatus(), BikeStatus.FOR_RETURN);
     }
 
-    @Test(expected = BookingNotFoundException.class)
-    void returnBikesToOriginalProviderFail() {
-        List<Bike> fakeBookingBikes = new ArrayList<Bike>();
-        fakeBooking.add(b2);
-
-        
-        bookingController.returnBikes(
+   
 }

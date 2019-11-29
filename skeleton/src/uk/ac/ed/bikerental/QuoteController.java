@@ -89,9 +89,9 @@ public class QuoteController{
         booking.setStatus(BookingStatus.PAYMENT_DONE);
 
         if (delivery_required) {
-            DeliveryService delivery_service  = DeliveryServiceFactory.setupMockDeliveryService();
+            DeliveryService delivery_service  = DeliveryServiceFactory.getDeliveryService();
             for (Bike bike : quotes.getBikes()) {
-                delivery_service.scheduleDelivery(bike, quotes.getBikeProvider(), customer.getLocation(), quotes.getDates().getStart());
+                delivery_service.scheduleDelivery(bike, quotes.getBikeProvider().getLocation(), customer.getLocation(), quotes.getDates().getStart());
             }
         }
     }
