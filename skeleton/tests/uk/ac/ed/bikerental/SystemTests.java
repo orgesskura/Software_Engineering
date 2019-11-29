@@ -42,7 +42,7 @@ public class SystemTests {
     private ArrayList<Bike> bookedBikes;
 
     private Quote q1;
-    private Booking b1;
+    private Booking bo1;
     private ArrayList<Booking> bs;
 
     private BookingController bookingController;
@@ -68,7 +68,7 @@ public class SystemTests {
         l2 = new Location("AA1 B23", "21 street road");
 
         open1 = new ArrayList<String>();
-        Open1.add("10 - 12");
+        open1.add("10 - 12");
         open1.add("10 - 18");
         open1.add("10 - 12");
         open1.add("10 - 12");
@@ -76,8 +76,8 @@ public class SystemTests {
         open1.add("");
         open1.add("10 - 12");
         
-        p1 = new BikeProvider("shop1", l1, open, null, null, new LinearDepreciationPolicy(), new BigDecimal(1.2));
-        p2 = new BikeProvider("shop2", l2, open, null, null, new DoubleDecliningPolicy(), new BigDecimal(1.1));
+        p1 = new BikeProvider("shop1", l1, open1, null, null, new LinearDepreciationPolicy(), new BigDecimal(1.2));
+        p2 = new BikeProvider("shop2", l2, open1, null, null, new DoubleDecliningPolicy(), new BigDecimal(1.1));
 
         bikes = new HashMap<Bike, BikeProvider>();
         bikes.put(b1, p1);
@@ -92,12 +92,12 @@ public class SystemTests {
         b1.setStatus(BikeStatus.UNAVAILABLE);
         
         q1 = new Quote(p1, bookedBikes, new BigDecimal(10), new BigDecimal(10), newest);
-        b1 = new Booking(q1, 1, BookingStatus.PAYMENT_DONE);
+        bo1 = new Booking(q1, 1, BookingStatus.PAYMENT_DONE);
 
-        bs = new ArrayList<Booking>();
-        bs.add(b1);
+        this.bs = new ArrayList<Booking>();
+        this.bs.add(bo1);
         
-        bookingController = new BookingController(b1);
+        bookingController = new BookingController(bo1);
     }
     
     // TODO: Write system tests covering the three main use cases
