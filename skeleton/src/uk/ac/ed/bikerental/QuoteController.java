@@ -30,7 +30,7 @@ public class QuoteController{
         this.location = location;
         this.rangeDates = new DateRange(start,end);
     }
-    private ArrayList<Quote> listQuotes(DateRange a,Location location,HashMap<BikeType,Integer> map,int nr_bikes){
+    public ArrayList<Quote> listQuotes(DateRange a,Location location,HashMap<BikeType,Integer> map){
         DateRange dates = this.rangeDates;
         this.typeNr = map;
         for(BikeProvider b : this.providers){
@@ -39,7 +39,7 @@ public class QuoteController{
                 if(this.biController.getMatchingAvailableBikes(b,map,this.boController,a).equals(null)) c = false;
 
             }
-            if(c == true) {
+            if(c == true && location.isNearTo(b.getLocation())) {
                 BigDecimal total = new BigDecimal(0.0);
                 BigDecimal deposit = new BigDecimal(0.0);
 
@@ -80,7 +80,7 @@ public class QuoteController{
     private int nrQuotes(){
         return this.quote.size();
     }
-    private void bookQuote(Quote quotes,String name , boolean delivery_required, BankDetails details, Customer customer){
+    public void bookQuote(Quote quotes,String name , boolean delivery_required, BankDetails details, Customer customer){
         this.orderNr++;
         Booking booking = new Booking(quotes,this.orderNr,BookingStatus.AwaitingPayment);
         this.bookings.add(booking);

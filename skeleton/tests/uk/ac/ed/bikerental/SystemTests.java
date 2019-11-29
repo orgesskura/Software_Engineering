@@ -39,12 +39,14 @@ public class SystemTests {
 
     private BikeProvider p1;
     private BikeProvider p2;
+    private ArrayList<BikeProvider> providers;
 
     private HashMap<Bike, BikeProvider> bikes;
 
     private BikeController bikeController;
 
     private ArrayList<Bike> bookedBikes;
+    private QuoteController qController;
 
     private Quote q1;
     private Booking bo1;
@@ -102,19 +104,22 @@ public class SystemTests {
             list);
         MockPricingPolicy mock = new MockPricingPolicy();    
         
-        p1 = new BikeProvider("shop1", l1, openingHours, null,null, new LinearDepreciationPolicy(), new BigDecimal(1.2));
-        p2 = new BikeProvider("shop2", l2, openingHours, null, mock, new DoubleDecliningPolicy(), new BigDecimal(1.1));
-
+        p1 = new BikeProvider("shop1", l1, openingHours, new HashSet<BikeProvider>(),new DefaultPricingPolicy(), new LinearDepreciationPolicy(), new BigDecimal(1.2));
+        p2 = new BikeProvider("shop2", l2, openingHours, new HashSet<BikeProvider>(), mock, new DoubleDecliningPolicy(), new BigDecimal(1.1));
+        providers.add(p1);
+        providers.add(p2);
         bikes = new HashMap<Bike, BikeProvider>();
         bikes.put(b1, p1);
         bikes.put(b2, p1);
         bikes.put(b3, p2);
         
-        bikeController = new BikeController(bikes, null);
+        bikeController = new BikeController(bikes, new HashMap<Bike,DateRange>());
 
 
         bookedBikes = new ArrayList<Bike>();
         bookedBikes.add(b1);
+        bookedBikes.add(b2);
+        bookedBikes.add(b3);
         b1.setStatus(BikeStatus.UNAVAILABLE);
         
         q1 = new Quote(p1,types, new BigDecimal(10), new BigDecimal(10), dates, bookedBikes);
@@ -137,6 +142,8 @@ public class SystemTests {
         this.details1 = new BankDetails(nr1,name1,date1,code1);
         this.details2 = new BankDetails(nr2, name2, date2, code2);
 
+        qController = new QuoteController(providers, bookedBikes, bookingController, bikeController, new ArrayList<Quote>());
+
     }
     
     // TODO: Write system tests covering the three main use cases
@@ -148,6 +155,17 @@ public class SystemTests {
     // }
 
     // black box test for bike return to original provider
+    @Test
+    void findQuoteTest(){
+        DateRange dates = new DateRange(LocalDate.of(2019,Month.MARCH,21),LocalDate.of(2019,Month.NOVEMBER,30));
+        Customer customer1 = new Customer("Sami",l1,7978988,new ArrayList<Booking>());
+        HashMap<BikeType,Integer> bikesPerType = new HashMap<>();
+        bikesPerType.put(bmx,3);
+        Location location = new Location("EH12 7AP","13 Traquair Park East");
+        ArrayList<Quote> quote = qController.listQuotes(dates,location,bikesPerType);
+        assertEquals(quote.size(),3);
+    }
+
     @Test
     void returnBikesToOriginalProviderPass() {
         bookingController.returnBikes(bookedBikes, p1,details1);
