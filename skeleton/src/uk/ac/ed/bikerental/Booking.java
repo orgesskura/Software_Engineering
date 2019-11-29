@@ -5,29 +5,29 @@ import java.util.Objects;
 import java.util.*;
 
 public class Booking {
-	private Quote quote;
-	private int orderNumber;
-	private BookingStatus status;
+    private Quote quote;
+    private int orderNumber;
+    private BookingStatus status;
 
-	public Booking(Quote quote, int orderNumber, BookingStatus status) {
-		this.quote = quote;
-		this.orderNumber = orderNumber;
-		this.status = status;
-	}
+    public Booking(Quote quote, int orderNumber, BookingStatus status) {
+        this.quote = quote;
+        this.orderNumber = orderNumber;
+        this.status = status;
+    }
 
-	public int getOrderNumber() {
-		return this.orderNumber;
-	}
+    public int getOrderNumber() {
+        return this.orderNumber;
+    }
 
-	public Quote getQuote() {
-		return this.quote;
-	}
+    public Quote getQuote() {
+        return this.quote;
+    }
 
-	public BookingStatus getStatus() {
-		return this.status;
-	}
+    public BookingStatus getStatus() {
+        return this.status;
+    }
 
-	public void setStatus(BookingStatus status) {
-		this.status = status;
-	}
+    public void setStatus(BookingStatus status) {
+        this.status = status;
+    }
 }

@@ -129,6 +129,7 @@ public class SystemTests {
     //     assertEquals("The moon", "cheese"); // Should fail
     // }
 
+    // black box test for bike return to original provider
     @Test
     void returnBikesToOriginalProviderPass() {
         bookingController.returnBikes(bookedBikes, p1);
@@ -136,11 +137,20 @@ public class SystemTests {
         assertEquals(b1.getStatus(), BikeStatus.AVAILABLE);
     }
 
+    // black box test fpr return to partner provider
     @Test
     void returnBikesToPartnerProviderPass() {
         p1.addPartner(p2);
 
         bookingController.returnBikes(bookedBikes, p2);
-        assertEquals(b1.getStatus(), BikeStatus.available);
+        assertEquals(b1.getStatus(), BikeStatus.FOR_RETURN);
     }
+
+    @Test(expected = BookingNotFoundException.class)
+    void returnBikesToOriginalProviderFail() {
+        List<Bike> fakeBookingBikes = new ArrayList<Bike>();
+        fakeBooking.add(b2);
+
+        
+        bookingController.returnBikes(
 }
