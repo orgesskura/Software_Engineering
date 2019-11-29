@@ -30,7 +30,7 @@ public class QuoteController{
         this.location = location;
         this.rangeDates = new DateRange(start,end);
     }
-    private ArrayList<Quote> listQuotes(DateRange a,Location location,HashMap<BikeType,Integer> map,int nr_bikes){
+    public ArrayList<Quote> listQuotes(DateRange a,Location location,HashMap<BikeType,Integer> map,int nr_bikes){
         DateRange dates = this.rangeDates;
         this.typeNr = map;
         for(BikeProvider b : this.providers){
@@ -80,18 +80,19 @@ public class QuoteController{
     private int nrQuotes(){
         return this.quote.size();
     }
-    private void bookQuote(Quote quotes,String name , boolean delivery_required, BankDetails details, Customer customer){
+    public void bookQuote(Quote quotes,String name , boolean delivery_required, BankDetails details, Customer customer){
         this.orderNr++;
         Booking booking = new Booking(quotes,this.orderNr,BookingStatus.AwaitingPayment);
+        boController.addInvoice(booking);
         this.bookings.add(booking);
         Payment.doPayment(booking,details);
 
         booking.setStatus(BookingStatus.PAYMENT_DONE);
-
+        // delivery service should check opening hours to decide when to pickup
         if (delivery_required) {
-            DeliveryService delivery_service  = DeliveryServiceFactory.setupMockDeliveryService();
+            DeliveryService delivery_service  = DeliveryServiceFactory.getDeliveryService();
             for (Bike bike : quotes.getBikes()) {
-                delivery_service.scheduleDelivery(bike, quotes.getBikeProvider(), customer.getLocation(), quotes.getDates().getStart());
+                delivery_service.scheduleDelivery(bike, quotes.getBikeProvider().getLocation(), customer.getLocation(), quotes.getDates().getStart());
             }
         }
     }
