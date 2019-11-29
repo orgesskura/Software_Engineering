@@ -5,9 +5,22 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
 
+/**
+ * The <code>DateRange</code> class represents a contigious collection of dates, and allows
+ * a useful set of functionality on a range.
+ */
 public class DateRange {
+    /**
+     * the two edges of the date range
+     */
     private LocalDate start, end;
 
+    /**
+     * the constructor for a <code>DateRange</code> class
+     *
+     * @param start the beginning of the range
+     * @param end the end of the range
+     */
     public DateRange(LocalDate start, LocalDate end) {
         this.start = start;
         this.end = end;
