@@ -25,8 +25,8 @@ class TestDoubleDecliningPolicy{
 	this.date1 = LocalDate.of(2014,Month.MARCH,25);
         this.date2 = LocalDate.of(2010,Month.SEPTEMBER,15);
         this.date3 = LocalDate.of(2019,Month.NOVEMBER,23);
-        this.bike1 = new Bike(date1,type1, new BigDecimal(1));
-        this.bike2 = new Bike(date2,type2, new BigDecimal(2));
+        this.bike1 = new Bike(date1,type1,1);
+        this.bike2 = new Bike(date2,type2,2);
     }
 
     @Test

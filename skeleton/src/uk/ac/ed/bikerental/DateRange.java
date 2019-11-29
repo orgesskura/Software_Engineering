@@ -70,10 +70,10 @@ public class DateRange {
 		}
 		else {
 			if(end.compareTo(start1)<0){
-				return true;
+				return false;
 			}
 			else {
-				return false;
+				return true;
 			}
 		}
 

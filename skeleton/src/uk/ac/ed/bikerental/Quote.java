@@ -4,24 +4,27 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 import java.time.LocalDate;
-
+// 
 public class Quote {
 	private BikeProvider provider;
-	private List<Bike> bikes;
+	private Set<BikeType> bikeTypes;
 	private BigDecimal price;
 	private BigDecimal deposit;
 	private DateRange dates;
-
-	public Quote(BikeProvider prov, ArrayList<Bike> bikes, BigDecimal prices, BigDecimal deposits, DateRange date){
+    private List<Bike> bikes;
+	public Quote(BikeProvider prov, Set<BikeType> bikes, BigDecimal prices, BigDecimal deposits, DateRange date,List<Bike> bike){
 		assert (prov != null && bikes != null && prices != null && deposits != null);
 
 		this.provider = prov;
-		this.bikes = bikes;
+		this.bikeTypes = bikes;
 		this.price = prices;
 		this.deposit = deposits;
 		this.dates = date;
+		this.bikes = bike;
 	}
 	public DateRange getDates(){
 		return this.dates;
@@ -30,7 +33,10 @@ public class Quote {
 		return this.provider;
 	}
 
-	public List<Bike> getBikes() {
+	public Set<BikeType> getBikeTypes() {
+		return this.bikeTypes;
+	}
+	public List<Bike> getBikes(){
 		return this.bikes;
 	}
 

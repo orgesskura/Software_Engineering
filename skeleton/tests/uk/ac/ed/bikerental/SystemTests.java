@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.Set;
+import java.util.HashSet;
 
 public class SystemTests {
     // You can add attributes here
@@ -42,7 +44,7 @@ public class SystemTests {
     private ArrayList<Bike> bookedBikes;
 
     private Quote q1;
-    private Booking b1;
+    private Booking bo1;
     private ArrayList<Booking> bs;
 
     private BookingController bookingController;
@@ -55,10 +57,13 @@ public class SystemTests {
         // Put your test setup here
         mountain = new BikeType("mountain", new BigDecimal(100), new BigDecimal(0.1), new BigDecimal(0.3));
         road = new BikeType("road", new BigDecimal(250), new BigDecimal(0.2), new BigDecimal(0.2));
-
+        Set<BikeType> types = new HashSet<>();
+        types.add(mountain);
+        types.add(road);
         older = LocalDate.of(2018, 10, 10);
         newer = LocalDate.of(2019, 8, 19);
         newest = LocalDate.of(2019, 9, 21);
+        DateRange dates = new DateRange(older,newest);
         
         b1 = new Bike(older, mountain, 1);
         b2 = new Bike(older, road, 2);
@@ -68,7 +73,7 @@ public class SystemTests {
         l2 = new Location("AA1 B23", "21 street road");
 
         open1 = new ArrayList<String>();
-        Open1.add("10 - 12");
+        open1.add("10 - 12");
         open1.add("10 - 18");
         open1.add("10 - 12");
         open1.add("10 - 12");
@@ -76,8 +81,8 @@ public class SystemTests {
         open1.add("");
         open1.add("10 - 12");
         
-        p1 = new BikeProvider("shop1", l1, open, null, null, new LinearDepreciationPolicy(), new BigDecimal(1.2));
-        p2 = new BikeProvider("shop2", l2, open, null, null, new DoubleDecliningPolicy(), new BigDecimal(1.1));
+        p1 = new BikeProvider("shop1", l1, open1, null, null, new LinearDepreciationPolicy(), new BigDecimal(1.2));
+        p2 = new BikeProvider("shop2", l2, open1, null, null, new DoubleDecliningPolicy(), new BigDecimal(1.1));
 
         bikes = new HashMap<Bike, BikeProvider>();
         bikes.put(b1, p1);
@@ -91,13 +96,15 @@ public class SystemTests {
         bookedBikes.add(b1);
         b1.setStatus(BikeStatus.UNAVAILABLE);
         
-        q1 = new Quote(p1, bookedBikes, new BigDecimal(10), new BigDecimal(10), newest);
-        b1 = new Booking(q1, 1, BookingStatus.PAYMENT_DONE);
+        q1 = new Quote(p1,types, new BigDecimal(10), new BigDecimal(10), dates, bookedBikes);
+        bo1 = new Booking(q1, 1, BookingStatus.PAYMENT_DONE);
+        ArrayList<Booking> bookings = new ArrayList<>();
+        bookings.add(bo1);
 
-        bs = new ArrayList<Booking>();
-        bs.add(b1);
+        this.bs = new ArrayList<Booking>();
+        this.bs.add(bo1);
         
-        bookingController = new BookingController(b1);
+        bookingController = new BookingController(bookings);
     }
     
     // TODO: Write system tests covering the three main use cases

@@ -40,7 +40,14 @@ public class Location {
 	public boolean isNearTo(Location other) {
 		Objects.requireNonNull(other);
 
-		return this.postcode.equals(other.getPostcode());
+		String postcode1 = other.getPostcode();
+		String postcode2 = this.getPostcode();
+        for(int i=0;i<2;i++){
+			char s = postcode1.charAt(i);
+			char t = postcode2.charAt(i);
+			if(s!=t) return false;
+		 }
+		 return true;
 	}
 
 	/**

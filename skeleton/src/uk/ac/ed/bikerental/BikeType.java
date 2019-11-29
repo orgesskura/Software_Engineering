@@ -20,6 +20,9 @@ public class BikeType {
 	public BigDecimal getValue() {
 		return this.originalValue;
 	}
+	public void setValue(BigDecimal value){
+		this.originalValue = value;
+	}
 
 	public BigDecimal getDepreciationRate() {
 		return this.depreciationRate;
