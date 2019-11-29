@@ -40,13 +40,14 @@ public class QuoteController{
 
             }
             if(c == true && location.isNearTo(b.getLocation())) {
+                List<Bike> bikes = this.biController.getMatchingAvailableBikes(b,map,this.boController,a);
                 BigDecimal total = new BigDecimal(0.0);
                 BigDecimal deposit = new BigDecimal(0.0);
 
                 PricingPolicy pricing = b.getPricingPolicy();
                 ValuationPolicy valuation = b.getValuationPolicy();
 
-                List<Bike> bikes = this.biController.getMatchingAvailableBikes(b,map,this.boController,a);
+
                 if (pricing == null)
                     pricing = new DefaultPricingPolicy();
 
@@ -67,7 +68,41 @@ public class QuoteController{
         return quote;
     }
 
+    //the following methods are public for testing reasons
+    public BigDecimal calculatePrice(List<Bike> bikes, BikeProvider provider, DateRange range) {
+        BigDecimal total = new BigDecimal(0.0);
 
+        PricingPolicy pricing = provider.getPricingPolicy();
+        
+        if (pricing == null) {
+            for (Bike bike : bikes) {
+                for (int i = 0; i < range.toDays(); i++)
+                    total.add(bike.getType().getValue().multiply(
+                        bike.getType().getRentalRate()));
+            }
+        } else {
+            total = pricing.calculatePrice(bikes, range);
+        }
+
+        return total;
+    }
+
+    public BigDecimal calculateDeposit(List<Bike> bikes, BikeProvider provider, DateRange range) {
+        BigDecimal deposit = new BigDecimal(0.0);
+
+        ValuationPolicy valuation = provider.getValuationPolicy();
+
+        for(Bike bike : bikes) {
+            if (valuation != null) {
+                deposit = deposit.add(valuation.calculateValue(bike, range.getStart()));
+            } else {
+                deposit = deposit.add(bike.getType().getValue().multiply(
+                    provider.getDepositRate())); // calculate deposit amount via interface
+            }
+        }
+
+        return deposit;
+    }
 
     private ArrayList<Bike> getAvailableBikes(DateRange date){
         ArrayList<Bike> list = new ArrayList<>();
