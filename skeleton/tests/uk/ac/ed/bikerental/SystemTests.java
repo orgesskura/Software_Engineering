@@ -93,9 +93,10 @@ public class SystemTests {
         openingHours.put(
             DaysOfWeek.FRIDAY,
             list);
+        MockPricingPolicy mock = new MockPricingPolicy();    
         
         p1 = new BikeProvider("shop1", l1, openingHours, null,null, new LinearDepreciationPolicy(), new BigDecimal(1.2));
-        p2 = new BikeProvider("shop2", l2, openingHours, null, null, new DoubleDecliningPolicy(), new BigDecimal(1.1));
+        p2 = new BikeProvider("shop2", l2, openingHours, null, mock, new DoubleDecliningPolicy(), new BigDecimal(1.1));
 
         bikes = new HashMap<Bike, BikeProvider>();
         bikes.put(b1, p1);
