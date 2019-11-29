@@ -10,23 +10,23 @@ public class Customer extends User {
     private String name;
     private Location location;
     public Customer(String Name, Location loc , int phone , ArrayList<Booking> booking){
-             super(Name,loc);
-             this.phone_nr = phone;
-             this.bookings = booking;
+        super(Name,loc);
+        this.phone_nr = phone;
+        this.bookings = booking;
 
-    }   
+    }
     public String getName(){
-       return this.name;
-   }
-   public int getPhoneNr(){
-       return this.phone_nr;
-   }
-   public ArrayList<Booking> getBookings(){
-       return this.bookings;
-   }
-   public Location getLocation(){
-       return this.location;
-   }
+        return this.name;
+    }
+    public int getPhoneNr(){
+        return this.phone_nr;
+    }
+    public ArrayList<Booking> getBookings(){
+        return this.bookings;
+    }
+    public Location getLocation(){
+        return this.location;
+    }
 
 
 

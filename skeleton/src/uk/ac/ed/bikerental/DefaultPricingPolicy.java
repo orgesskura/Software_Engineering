@@ -10,8 +10,8 @@ public class DefaultPricingPolicy implements PricingPolicy{
     public BigDecimal calculatePrice(Collection<Bike> bikes, DateRange duration){
         BigDecimal price = new BigDecimal(0.0);
         for(Bike bike : bikes){
-              BikeType type = bike.getType();
-              price = (price.add(type.getValue()).multiply(new BigDecimal(duration.toDays())));
+            BikeType type = bike.getType();
+            price = (price.add(type.getValue()).multiply(new BigDecimal(duration.toDays())));
         }
         return price;
     }

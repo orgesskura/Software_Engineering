@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.time.LocalDate;
 import java.util.*;
 public class QuoteController{
-  //  private ArrayList<Quote> quotes;
+    //  private ArrayList<Quote> quotes;
     public  int orderNr;
     private ArrayList<BikeProvider> providers;
     private ArrayList<Bike> bikes; // variable storing the current number of available bikes
@@ -37,43 +37,62 @@ public class QuoteController{
             boolean c = true;
             for(BikeType type : map.keySet()){
                 if(this.biController.getMatchingAvailableBikes(b,map,this.boController,a).equals(null)) c = false;
-                
+
             }
             if(c == true) {
                 BigDecimal total = new BigDecimal(0.0);
                 BigDecimal deposit = new BigDecimal(0.0);
-                for(Bike bike :this.biController.getMatchingAvailableBikes(b,map,this.boController,a) ){
-                    total = total.add(bike.getType().getValue()); // calculate total to pay and also include interface later
-                    deposit = deposit.add(bike.getType().getValue()); // calculate deposit amount via interface
+
+                PricingPolicy pricing = b.getPricingPolicy();
+                ValuationPolicy valuation = b.getValuationPolicy();
+
+                List<Bike> bikes = this.biController.getMatchingAvailableBikes(b,map,this.boController,a);
+                if (pricing == null)
+                    pricing = new DefaultPricingPolicy();
+
+                total = pricing.calculatePrice(bikes, a);
+
+                for(Bike bike : bikes) {
+                    if (valuation != null) {
+                        deposit = deposit.add(valuation.calculateValue(bike, a.getStart()));
+                    } else {
+                        deposit = deposit.add(bike.getType().getValue().multiply(b.getDepositRate())); // calculate deposit amount via interface
+                    }
                 }
+
                 Quote quote = new Quote(b, map.keySet(), total, deposit, a,this.biController.getMatchingAvailableBikes(b,map,this.boController,a));
                 this.quote.add(quote);
             }
         }
         return quote;
-        }
-        
+    }
 
-    
+
+
     private ArrayList<Bike> getAvailableBikes(DateRange date){
-      ArrayList<Bike> list = new ArrayList<>();
-      for(BikeProvider b : this.providers){
+        ArrayList<Bike> list = new ArrayList<>();
+        for(BikeProvider b : this.providers){
             list.addAll(this.biController.getMatchingAvailableBikes(b,this.typeNr,this.boController,date));
-      }
-      return list;    
+        }
+        return list;
     }
 
     private int nrQuotes(){
         return this.quote.size();
     }
-    private void bookQuote(Quote quotes,String name , String mode_collection,BankDetails details){
+    private void bookQuote(Quote quotes,String name , boolean delivery_required, BankDetails details, Customer customer){
         this.orderNr++;
         Booking booking = new Booking(quotes,this.orderNr,BookingStatus.AwaitingPayment);
         this.bookings.add(booking);
         Payment.doPayment(booking,details);
-        
+
+        booking.setStatus(BookingStatus.PAYMENT_DONE);
+
+        if (delivery_required) {
+            DeliveryService delivery_service  = DeliveryServiceFactory.setupMockDeliveryService();
+            for (Bike bike : quotes.getBikes()) {
+                delivery_service.scheduleDelivery(bike, quotes.getBikeProvider(), customer.getLocation(), quotes.getDates().getStart());
+            }
+        }
     }
-
-
-
 }
