@@ -86,7 +86,7 @@ public class QuoteController{
         boController.addInvoice(booking);
         this.bookings.add(booking);
         Payment.doPayment(booking,details);
-
+        this.boController.addInvoice(booking);
         booking.setStatus(BookingStatus.PAYMENT_DONE);
         // delivery service should check opening hours to decide when to pickup
         if (delivery_required) {

@@ -17,7 +17,7 @@ public class BookingController {
     /**
      * The bookings the controller manages
      */
-    private List<Booking> bookings;
+    private ArrayList<Booking> bookings;
 
     /**
      * Returns a new BookingController object, initialised with a list of bookings, or an
@@ -31,6 +31,9 @@ public class BookingController {
         } else {
             this.bookings = new ArrayList<Booking>();
         }
+    }
+    public ArrayList<Booking> getBookings(){
+        return this.bookings;
     }
 
     /**
