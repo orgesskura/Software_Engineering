@@ -158,7 +158,7 @@ public class SystemTests {
     //     assertEquals("The moon", "cheese"); // Should fail
     // }
 
-    // black box test for bike return to original provider
+    // tests if quote controller finds quotes for a given range, with no conflicts
     @Test
     void findQuoteTest(){
         DateRange dates = new DateRange(LocalDate.of(2019,Month.MARCH,21),LocalDate.of(2019,Month.NOVEMBER,30));
@@ -170,6 +170,7 @@ public class SystemTests {
         assertTrue(quote.size() > 0);
     }
 
+    // tests if quote controller does not find available bikes due to a difference in location
     @Test
     void findQuoteTestDifferentCity(){
         DateRange dates = new DateRange(LocalDate.of(2019,Month.MARCH,21),LocalDate.of(2019,Month.NOVEMBER,30));
@@ -182,6 +183,8 @@ public class SystemTests {
         
     }
 
+    // tests if bikes can be returned to the original provider. checking the final status of the
+    // bike is sufficient, as it requires all other steps to have been carried out correctly
     @Test
     void returnBikesToOriginalProviderPass() {
         q1 = new Quote(p1,types, new BigDecimal(10), new BigDecimal(10), dates, bookedBikes);
@@ -196,7 +199,7 @@ public class SystemTests {
         assertEquals(b1.getStatus(), BikeStatus.AVAILABLE);
     }
 
-    // black box test fpr return to partner provider
+    // black box test for return to partner provider. test condition is similar to previous test
     @Test
     void returnBikesToPartnerProviderPass() {
         q1 = new Quote(p1,types, new BigDecimal(10), new BigDecimal(10), dates, bookedBikes);
@@ -212,6 +215,7 @@ public class SystemTests {
         assertTrue(b1.getStatus() == BikeStatus.FOR_RETURN || b1.getStatus() == BikeStatus.AVAILABLE);
     }
 
+    // an integration test for finding and booking quotes in tandem
     @Test
     void findQuoteAndBookIt(){
         DateRange dates = new DateRange(LocalDate.of(2019,Month.MARCH,21),LocalDate.of(2019,Month.NOVEMBER,30));
@@ -225,12 +229,7 @@ public class SystemTests {
         assertEquals(bookingController.getBookings().get(0).getStatus(),BookingStatus.PAYMENT_DONE);
     }
 
-
-    /*    @Test
-    void testBikeAvailableDurigRange() {
-
-    }*/
-    
+    // tests if a given quote can be booked properly
     @Test
     void bookQuote(){
         Customer customer1 = new Customer("Sami",l1,7978988,new ArrayList<Booking>());
