@@ -3,18 +3,19 @@ package uk.ac.ed.bikerental;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.*;
+import java.time.LocalTime;
 
 public class BikeProvider extends User {
 	private String name;
 	private Location location;
 	private Set<BikeProvider> partners;
-	private List<String> openingHours;
+	private Map<DaysOfWeek,ArrayList<LocalTime>> openingHours;
 	private HashMap<BikeType,Integer> bikesNr;//current available nr of bikeTypes
 	private PricingPolicy pricingPolicy;
 	private ValuationPolicy valuationPolicy;
 	private BigDecimal depositRate;
 
-	public BikeProvider(String name, Location location, List<String> openingHours, Set<BikeProvider> partners, PricingPolicy pricingPolicy, ValuationPolicy valuationPolicy, BigDecimal depositRate) {
+	public BikeProvider(String name, Location location, Map<DaysOfWeek,ArrayList<LocalTime>> openingHours, Set<BikeProvider> partners, PricingPolicy pricingPolicy, ValuationPolicy valuationPolicy, BigDecimal depositRate) {
 		super(name, location);
 		this.openingHours = openingHours;
 		this.partners = partners;
@@ -23,7 +24,7 @@ public class BikeProvider extends User {
 		this.depositRate = depositRate;
 	}
 
-	public List<String> getOpeningHours() {
+	public Map<DaysOfWeek,ArrayList<LocalTime>> getOpeningHours() {
 		return this.openingHours;
 	}
 
