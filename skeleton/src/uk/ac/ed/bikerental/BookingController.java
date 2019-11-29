@@ -49,6 +49,9 @@ public class BookingController {
             booking = findBooking(bikes);
         } catch(BookingNotFoundException ex) {
             // TODO: add some error handling here
+            for (Bike bike : bikes) {
+                bike.setStatus(BikeStatus.AVAILABLE);
+            }
             System.out.println("collection of bikes is not being rented");
             return;
         }
