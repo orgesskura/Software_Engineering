@@ -5,7 +5,11 @@ By using skeleton files from University of Edinburgh(https://github.com/twright/
 The objective was to simulate a whole software engineering process:
 
 capturing requirements
+
 identifying stakeholders
+
 designing the app
+
 implementing the high-level design in Java
+
 CW Marks: 99/100
