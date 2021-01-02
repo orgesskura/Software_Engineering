@@ -35,7 +35,6 @@ public class SystemTests {
     private Location l1;
     private Location l2;
 
-    private ArrayList<String> open1;
 
     private BikeProvider p1;
     private BikeProvider p2;
@@ -152,13 +151,10 @@ public class SystemTests {
     
     // TODO: Write system tests covering the three main use cases
 
-    // @Test
-    // void myFirstTest() {
-    //     // JUnit tests look like this
-    //     assertEquals("The moon", "cheese"); // Should fail
-    // }
+  
 
     // black box test for bike return to original provider
+    // this checks that it does not find a bike when there is a booking
     @Test
     void findQuoteTest(){
         DateRange dates = new DateRange(LocalDate.of(2019,Month.MARCH,21),LocalDate.of(2019,Month.NOVEMBER,30));
@@ -167,7 +163,7 @@ public class SystemTests {
         bikesPerType.put(road,1);
         Location location = new Location("AA12 7AP","13 Traquair Park East");
         ArrayList<Quote> quote = qController.listQuotes(dates,location,bikesPerType);
-        assertEquals(quote.size(),1);
+        assertEquals(quote.size(),0);
     }
 
     @Test
@@ -204,7 +200,7 @@ public class SystemTests {
         Customer customer1 = new Customer("Sami",l1,7978988,new ArrayList<Booking>());
         HashMap<BikeType,Integer> bikesPerType = new HashMap<>();
         bikesPerType.put(bmx,3);
-        Location location = new Location("EH12 7AP","13 Traquair Park East");
+        Location location = new Location("AA12 7AP","13 Traquair Park East");
         ArrayList<Quote> quote = qController.listQuotes(dates,location,bikesPerType);
         assertEquals(quote.size(),1);
         qController.bookQuote(quote.get(0),"Sami",true,this.details1,customer1);
