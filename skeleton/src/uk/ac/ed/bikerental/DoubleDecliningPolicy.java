@@ -13,8 +13,6 @@ public class DoubleDecliningPolicy implements ValuationPolicy {
         BigDecimal deprAmount = new BigDecimal(2).multiply(type.getDepreciationRate());
         deprAmount = (BigDecimal.ONE.subtract(deprAmount)).pow(age);
 
-        assert deprAmount.compareTo(BigDecimal.ONE) < 0; // if deposit amount would be <= 0
-
         return deprAmount.multiply(type.getValue());
     }
 }
